@@ -1,0 +1,7 @@
+flask==3.0.03
+transformers==4.40.1
+scipy==1.13.0
+tensorflow==2.16.1
+torch==2.3.0
+torchvision==0.18.0
+torchaudio==2.3.0

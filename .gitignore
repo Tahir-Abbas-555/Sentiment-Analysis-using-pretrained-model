@@ -1,0 +1,6 @@
+.env
+start.sh
+# Byte-compiled / optimized / DLL files
+*.log
+__pycache__/
+venv/
