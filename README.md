@@ -1,41 +1,113 @@
-# Sentiment Analysis using Pre trained model
+# Sentiment Analysis Web App
 
-## Mac OS or Linux
+## Overview
+This project consists of a sentiment analysis web application built using **Streamlit** for the frontend and **Flask** for the backend. The model used is **cardiffnlp/twitter-roberta-base-sentiment-latest**, which classifies input sentences into three sentiment categories: **Positive, Neutral, and Negative**.
 
-```bash
-    python3 -m venv venv
-    source venv/bin/activate
+## Features
+- Users can input multiple sentences for analysis.
+- Sentiment analysis is performed using a pre-trained **RoBERTa** model.
+- Sentiment percentages are calculated and displayed.
+- A **Flask API** endpoint (`/sentiment`) is available for programmatic access.
+
+---
+
+## Project Structure
+```
+📂 sentiment-analysis
+│── .gitignore  # Ignored files
+│── app.py  # Flask API for sentiment analysis
+│── stream.py  # Streamlit app for user interaction
+│── requirements.txt  # Dependencies
+│── README.md  # Project documentation
 ```
 
-## Windows
+---
 
+## Installation and Setup
+### 1. Clone the Repository
 ```bash
-  python3 -m venv venv
-  venv\Scripts\activate
+git clone <repo-url>
+cd sentiment-analysis
 ```
 
-
-## Install Dependencies
-
+### 2. Create a Virtual Environment (Optional but Recommended)
 ```bash
-    pip install -r requirements.txt
+python -m venv venv
+source venv/bin/activate  # On macOS/Linux
+venv\Scripts\activate  # On Windows
 ```
 
-## Run The App on Mac
-
+### 3. Install Dependencies
 ```bash
-  python3 -m venv venv
-  source venv/bin/activate
-  python3 app.py
+pip install -r requirements.txt
 ```
 
-## Run the App on Windows
+---
+
+## Running the Flask API (Backend)
+### 1. Run the Flask App
 ```bash
-  python3 -m venv venv
-  venv\Scripts\activate
-  python3 app.py
+python app.py
+```
+### 2. API Endpoint
+Once the server is running, the API can be accessed at:
+```
+POST http://localhost:5000/sentiment
+```
+**Request Body (JSON Example):**
+```json
+{
+    "sentence1": "I love this product!",
+    "sentence2": "It's okay, nothing special.",
+    "sentence3": "I hate waiting in long lines."
+}
+```
+**Response Example:**
+```json
+{
+    "positive": 33.33,
+    "neutral": 33.33,
+    "negative": 33.33
+}
 ```
 
+---
+
+## Running the Streamlit Web App (Frontend)
+### 1. Run the Streamlit App
 ```bash
-  pip freeze >requirements.txt
+streamlit run stream.py
 ```
+The web app will be accessible at:  
+**http://localhost:8501**
+
+---
+
+## Technologies Used
+- **Python** (Backend and Frontend)
+- **Flask** (API Development)
+- **Streamlit** (Web Interface)
+- **Transformers** (Hugging Face model)
+- **NumPy, SciPy** (Mathematical Operations)
+- **Collections (Counter)** (Sentiment Analysis Computation)
+
+---
+
+## Future Enhancements
+- Deploy the application on **AWS/GCP/Heroku**.
+- Improve UI/UX with interactive graphs.
+- Support for more languages.
+
+---
+
+## License
+This project is open-source and available under the **MIT License**.
+
+---
+
+## Contact
+For queries or contributions, reach out to:
+**Tahir Abbas Shaikh**  
+📧 tahirabbasshaikh555@gmail.com  
+📞 +923022024206
+
