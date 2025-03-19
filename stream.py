@@ -25,13 +25,18 @@ def analyze_sentiment_for_sentences(sentences):
 def calculate_sentiment_percentages(sentiments):
     sentiment_counts = Counter(sentiments)
     total_sentiments = len(sentiments)
-    sentiment_percentages = {"positive": 0, "neutral": 0, "negative": 0}
+    sentiment_percentages = {"😊 positive": 0, "😐 neutral": 0, "😔 negative": 0}
     for sentiment, count in sentiment_counts.items():
-        sentiment_percentages[sentiment] = (count / total_sentiments) * 100
+        if sentiment == "positive":
+            sentiment_percentages["😊 positive"] = (count / total_sentiments) * 100
+        elif sentiment == "neutral":
+            sentiment_percentages["😐 neutral"] = (count / total_sentiments) * 100
+        else:
+            sentiment_percentages["😔 negative"] = (count / total_sentiments) * 100
     return sentiment_percentages
 
 # Streamlit UI
-st.title("Sentiment Analysis Web App")
+st.title("✨ Sentiment Analysis Web App")
 st.write("Enter sentences below to analyze their sentiment.")
 
 # User input
@@ -43,7 +48,7 @@ if st.button("Analyze Sentiment"):
         sentiments = analyze_sentiment_for_sentences(sentences)
         sentiment_percentages = calculate_sentiment_percentages(sentiments)
         
-        st.subheader("Sentiment Analysis Results")
+        st.subheader("📊 Sentiment Analysis Results")
         st.write(sentiment_percentages)
     else:
-        st.warning("Please enter at least one sentence.")
+        st.warning("⚠️ Please enter at least one sentence.")
