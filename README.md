@@ -8,6 +8,7 @@ This project consists of a sentiment analysis web application built using **Stre
 - Sentiment analysis is performed using a pre-trained **RoBERTa** model.
 - Sentiment percentages are calculated and displayed.
 - A **Flask API** endpoint (`/sentiment`) is available for programmatic access.
+- **Live Web App:** [Sentiment Analysis Web App](https://huggingface.co/spaces/Tahir5/Sentiment-Analysis)
 
 ---
 
@@ -110,4 +111,3 @@ For queries or contributions, reach out to:
 **Tahir Abbas Shaikh**  
 📧 tahirabbasshaikh555@gmail.com  
 📞 +923022024206
-
