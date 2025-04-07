@@ -3,6 +3,8 @@ from transformers import AutoModelForSequenceClassification, AutoTokenizer, Auto
 import numpy as np
 from scipy.special import softmax
 from collections import Counter
+import pandas as pd
+import plotly.express as px
 
 # Load model and tokenizer
 MODEL = "cardiffnlp/twitter-roberta-base-sentiment-latest"
@@ -25,19 +27,112 @@ def analyze_sentiment_for_sentences(sentences):
 def calculate_sentiment_percentages(sentiments):
     sentiment_counts = Counter(sentiments)
     total_sentiments = len(sentiments)
-    sentiment_percentages = {"😊 positive": 0, "😐 neutral": 0, "😔 negative": 0}
-    for sentiment, count in sentiment_counts.items():
-        if sentiment == "positive":
-            sentiment_percentages["😊 positive"] = (count / total_sentiments) * 100
-        elif sentiment == "neutral":
-            sentiment_percentages["😐 neutral"] = (count / total_sentiments) * 100
-        else:
-            sentiment_percentages["😔 negative"] = (count / total_sentiments) * 100
-    return sentiment_percentages
+    
+    sentiment_labels = {
+        "positive": "😊 Positive",
+        "neutral": "😐 Neutral",
+        "negative": "😔 Negative"
+    }
+
+    percentages = []
+    for sentiment in ["positive", "neutral", "negative"]:
+        count = sentiment_counts.get(sentiment, 0)
+        percent = round((count / total_sentiments) * 100, 2)
+        percentages.append({
+            "Sentiment": sentiment_labels[sentiment],
+            "Percentage": percent
+        })
+
+    df = pd.DataFrame(percentages)
+    
+    # Bar chart using Plotly
+    fig = px.bar(
+        df,
+        x="Sentiment",
+        y="Percentage",
+        text="Percentage",
+        color="Sentiment",
+        color_discrete_map={
+            "😊 Positive": "green",
+            "😐 Neutral": "gray",
+            "😔 Negative": "red"
+        }
+    )
+    fig.update_layout(title="Sentiment Distribution", title_x=0.5)
+    fig.update_traces(textposition='outside')
+
+    return df, fig
 
 # Streamlit UI
 st.title("✨ Sentiment Analysis Web App")
 st.write("Enter sentences below to analyze their sentiment.")
+
+# Sidebar info with custom profile section
+st.sidebar.title("ℹ️ About")
+st.sidebar.markdown("---")
+st.sidebar.markdown(
+    """
+    <style>
+        .custom-sidebar {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            width: 650px;  /* Adjust the sidebar width */
+            padding: 10px;
+        }
+        .profile-container {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            width: 100%;
+        }
+        .profile-image {
+            width: 200px;  /* Reduce image width */
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+            margin-right: 15px;
+        }
+        .profile-details {
+            font-size: 14px;
+            width: 100%;
+        }
+        .profile-details h3 {
+            margin: 0 0 10px;
+            font-size: 18px;
+            color: #333;
+        }
+        .profile-details p {
+            margin: 10px 0;
+        }
+        .profile-details a {
+            text-decoration: none;
+            color: #1a73e8;
+        }
+        .profile-details a:hover {
+            text-decoration: underline;
+        }
+        .icon {
+            margin-right: 6px;
+        }
+    </style>
+
+    <div class="custom-sidebar">
+        <div class="profile-container">
+            <img class="profile-image" src="https://res.cloudinary.com/dwhfxqolu/image/upload/v1744014185/pnhnaejyt3udwalrmnhz.jpg" alt="Profile Image">
+            <div class="profile-details">
+                <h3>👨‍💻 Developed by:<br> Tahir Abbas Shaikh</h3>
+                <p>📧 <strong>Email:</strong> <a href="mailto:tahirabbasshaikh555@gmail.com">tahirabbasshaikh555@gmail.com</a></p>
+                <p>📍 <strong>Location:</strong> Sukkur, Sindh, Pakistan</p>
+                <p>💼 <strong>GitHub:</strong> <a href="https://github.com/Tahir-Abbas-555" target="_blank">Tahir-Abbas-555</a></p>
+                <p>📁 <strong>HuggingFace:</strong> <a href="https://huggingface.co/Tahir5" target="_blank">Tahir5</a></p>
+            </div>
+        </div>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
 # User input
 user_input = st.text_area("Enter sentences (one per line):")
@@ -46,9 +141,11 @@ if st.button("Analyze Sentiment"):
         sentences = user_input.split("\n")
         sentences = [s.strip() for s in sentences if s.strip()]
         sentiments = analyze_sentiment_for_sentences(sentences)
-        sentiment_percentages = calculate_sentiment_percentages(sentiments)
         
+        df, fig = calculate_sentiment_percentages(sentiments)
+
         st.subheader("📊 Sentiment Analysis Results")
-        st.write(sentiment_percentages)
+        st.dataframe(df, use_container_width=True)
+        st.plotly_chart(fig, use_container_width=True)
     else:
         st.warning("⚠️ Please enter at least one sentence.")
