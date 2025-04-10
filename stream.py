@@ -78,7 +78,7 @@ st.sidebar.markdown(
             flex-direction: column;
             align-items: center;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            width: 650px;  /* Adjust the sidebar width */
+            width: 650px;
             padding: 10px;
         }
         .profile-container {
@@ -88,7 +88,7 @@ st.sidebar.markdown(
             width: 100%;
         }
         .profile-image {
-            width: 200px;  /* Reduce image width */
+            width: 200px;
             height: auto;
             border-radius: 15px;
             box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
@@ -105,6 +105,8 @@ st.sidebar.markdown(
         }
         .profile-details p {
             margin: 10px 0;
+            display: flex;
+            align-items: center;
         }
         .profile-details a {
             text-decoration: none;
@@ -113,7 +115,9 @@ st.sidebar.markdown(
         .profile-details a:hover {
             text-decoration: underline;
         }
-        .icon {
+        .icon-img {
+            width: 18px;
+            height: 18px;
             margin-right: 6px;
         }
     </style>
@@ -123,16 +127,26 @@ st.sidebar.markdown(
             <img class="profile-image" src="https://res.cloudinary.com/dwhfxqolu/image/upload/v1744014185/pnhnaejyt3udwalrmnhz.jpg" alt="Profile Image">
             <div class="profile-details">
                 <h3>👨‍💻 Developed by:<br> Tahir Abbas Shaikh</h3>
-                <p>📧 <strong>Email:</strong> <a href="mailto:tahirabbasshaikh555@gmail.com">tahirabbasshaikh555@gmail.com</a></p>
+                <p>
+                    <img class="icon-img" src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Gmail_Icon.png" alt="Gmail">
+                    <strong>Email:</strong> <a href="mailto:tahirabbasshaikh555@gmail.com">tahirabbasshaikh555@gmail.com</a>
+                </p>
                 <p>📍 <strong>Location:</strong> Sukkur, Sindh, Pakistan</p>
-                <p>💼 <strong>GitHub:</strong> <a href="https://github.com/Tahir-Abbas-555" target="_blank">Tahir-Abbas-555</a></p>
-                <p>📁 <strong>HuggingFace:</strong> <a href="https://huggingface.co/Tahir5" target="_blank">Tahir5</a></p>
+                <p>
+                    <img class="icon-img" src="https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png" alt="GitHub">
+                    <strong>GitHub:</strong> <a href="https://github.com/Tahir-Abbas-555" target="_blank">Tahir-Abbas-555</a>
+                </p>
+                <p>
+                    <img class="icon-img" src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" alt="HuggingFace">
+                    <strong>HuggingFace:</strong> <a href="https://huggingface.co/Tahir5" target="_blank">Tahir5</a>
+                </p>
             </div>
         </div>
     </div>
     """,
     unsafe_allow_html=True
 )
+
 
 # User input
 user_input = st.text_area("Enter sentences (one per line):")
