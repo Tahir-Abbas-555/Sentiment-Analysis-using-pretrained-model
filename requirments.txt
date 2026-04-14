@@ -39,7 +39,7 @@ opt_einsum==3.4.0
 optree==0.14.1
 packaging==24.2
 pandas==2.2.3
-pillow==11.1.0
+pillow==12.2.0
 protobuf==4.25.6
 pyarrow==19.0.1
 pydeck==0.9.1
